@@ -3,3 +3,47 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+* {
+  box-sizing: border-box;
+  vertical-align: top;
+  margin: 0;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: #F2F2F2;
+}
+
+.page--background {
+  width: 100vw;
+  height: 50vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(45deg, #28cc99 0%,#28cc60 100%);
+}
+
+.page--foreground {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.window {
+  width: 80vw;
+  max-width: 1200px;
+  height: 80vh;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+}
