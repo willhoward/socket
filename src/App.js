@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import Page from './components/page';
 import Window from './components/window';
-import Auth from './components/auth';
+import Login from './components/login';
 
 class App extends Component {
   constructor() {
@@ -32,7 +32,7 @@ class App extends Component {
 
     return (
       <Page>
-        { user ? <Window /> : <Auth /> }
+        { user ? <Window /> : <Login /> }
       </Page>
     );
   }

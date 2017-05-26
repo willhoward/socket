@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 
-class Auth extends Component {
+class Login extends Component {
   constructor() {
     super();
 
     this.state = {
+
       email: '',
       password: '',
+      error: '',
     };
   }
 
@@ -19,21 +21,21 @@ class Auth extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('Adding user');
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .catch(error => console.log(error.message));
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+      .catch(error => this.setState({ error: error.message }));
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, error } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <input type="email" name="email" value={email} onChange={this.handleChange} />
         <input type="password" name="password" value={password} onChange={this.handleChange} />
         <button type="submit">Submit</button>
+        { error && <p>{error}</p> }
       </form>
     );
   }
 }
 
-export default Auth;
+export default Login;
