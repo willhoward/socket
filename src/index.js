@@ -24,8 +24,8 @@ const history = createBrowserHistory();
 ReactDOM.render(
   <Router history={history}>
     <Switch>
-      <Route exact path="/" render={App} />
-      <Route render={NotFound} />
+      <Route exact path="/" component={App} />
+      <Route component={NotFound} />
     </Switch>
   </Router>
   , document.getElementById('root'));
