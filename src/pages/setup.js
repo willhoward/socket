@@ -67,9 +67,7 @@ class Setup extends Component {
       <form className="gateway" onSubmit={this.handleSubmit}>
         <h1 className="white align-center">Set Up Profile</h1>
         <Spacer />
-        <p>{avatar}</p>
-        <img src={avatar} alt="avatar" />
-        <Uploader onComplete={this.handleCompletedUpload} />
+        <Uploader url={avatar} onComplete={this.handleCompletedUpload} />
         <Input
           type="text"
           name="userName"
