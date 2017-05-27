@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import Input from '../components/input';
+import Button from '../components/button';
+import Spacer from '../components/spacer';
+import Callout from '../components/callout';
 
 class Signup extends Component {
   constructor() {
@@ -13,9 +17,10 @@ class Signup extends Component {
     };
   }
 
-  handleChange = event => {
+  handleChange = (name, value) => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [name]: value,
+      error: '',
     });
   }
 
@@ -43,13 +48,16 @@ class Signup extends Component {
   render() {
     const { displayName, email, password, error } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="text" name="displayName" value={displayName} onChange={this.handleChange} />
-        <input type="email" name="email" value={email} onChange={this.handleChange} />
-        <input type="password" name="password" value={password} onChange={this.handleChange} />
-        <button type="submit">Submit</button>
-        { error && <p>{error}</p> }
-        <p><a href="/login">Login</a> instead</p>
+      <form className="gateway" onSubmit={this.handleSubmit}>
+        <h1 className="white align-center">Sign Up</h1>
+        <Spacer />
+        <Input type="text" name="displayName" placeholder="Your name" value={displayName} onChange={this.handleChange} />
+        <Input type="email" name="email" placeholder="Email address" value={email} onChange={this.handleChange} />
+        <Input type="password" name="password" placeholder="Password" value={password} onChange={this.handleChange} />
+        <Button value="Log In" type="submit" />
+        { error && <Callout type="error" value={error} /> }
+        <Spacer />
+        <p className="align-center">Already with us? <a className="white" href="/login">Log In</a></p>
       </form>
     );
   }

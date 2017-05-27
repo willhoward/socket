@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import Input from '../components/input';
 import Button from '../components/button';
+import Spacer from '../components/spacer';
+import Callout from '../components/callout';
 
 class Login extends Component {
   constructor() {
@@ -17,6 +19,7 @@ class Login extends Component {
   handleChange = (name, value) => {
     this.setState({
       [name]: value,
+      error: '',
     });
   }
 
@@ -30,11 +33,14 @@ class Login extends Component {
     const { email, password, error } = this.state;
     return (
       <form className="gateway" onSubmit={this.handleSubmit}>
+        <h1 className="white align-center">Log In</h1>
+        <Spacer />
         <Input type="email" name="email" placeholder="Email address" value={email} onChange={this.handleChange} />
         <Input type="password" name="password" placeholder="Password" value={password} onChange={this.handleChange} />
-        <Button value="Login" type="submit" />
-        { error && <p>{error}</p> }
-        <p><a href="/signup">Signup</a> instead</p>
+        <Button value="Log In" type="submit" />
+        { error && <Callout type="error" value={error} /> }
+        <Spacer />
+        <p className="align-center">Need an account? <a className="white" href="/signup">Sign Up</a></p>
       </form>
     );
   }
