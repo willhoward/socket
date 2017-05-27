@@ -8,12 +8,14 @@ class Input extends Component {
     placeholder: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    required: PropTypes.bool,
   };
 
   static defaultProps = {
     type: 'text',
     placeholder: '',
     value: '',
+    required: false,
   };
 
   constructor(props) {
@@ -28,7 +30,7 @@ class Input extends Component {
 
   render() {
     const { active } = this.state;
-    const { type, name, placeholder, value } = this.props;
+    const { type, name, placeholder, value, required } = this.props;
 
     return (
       <div className={`field ${(value || active) && 'active'}`}>
@@ -42,6 +44,7 @@ class Input extends Component {
           onBlur={() => this.setState({ active: false })}
           placeholder={placeholder}
           autoComplete="new-password"
+          required={required}
         />
         <label htmlFor={name}>{placeholder}</label>
       </div>
