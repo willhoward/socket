@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import createBrowserHistory from 'history/createBrowserHistory';
 import Page from './components/page';
 import NotFound from './pages/not-found';
-import Window from './components/window';
+import Console from './pages/console';
 import Login from './pages/login';
 import Signup from './pages/signup';
+import Setup from './pages/setup';
 
 const history = createBrowserHistory();
 
@@ -23,10 +24,19 @@ class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        return this.setState({ user, emailVerified: user.emailVerified, loading: false });
+        console.log(user);
+        return this.setState({ user, loading: false });
       }
-      return this.setState({ user: null, emailVerified: false, loading: false });
+      return this.setState({ user: null, loading: false });
     });
+  }
+
+  renderConsole = () => {
+    const { user } = this.state;
+    if (user) {
+      return (user.userName ? <Setup /> : <Console />);
+    }
+    return <Login />;
   }
 
   render() {
@@ -40,7 +50,7 @@ class App extends Component {
       <Router history={history}>
         <Page>
           <Switch>
-            <Route exact path="/" component={user ? Window : Login} />
+            <Route exact path="/" render={this.renderConsole} />
             <Route exact path="/login" render={() => (user ? <Redirect to="/" /> : <Login />)} />
             <Route exact path="/signup" render={() => (user ? <Redirect to="/" /> : <Signup />)} />
             <Route component={NotFound} />
