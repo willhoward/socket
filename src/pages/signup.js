@@ -6,6 +6,7 @@ class Signup extends Component {
     super();
 
     this.state = {
+      displayName: '',
       email: '',
       password: '',
       error: '',
@@ -21,16 +22,29 @@ class Signup extends Component {
   handleSubmit = event => {
     event.preventDefault();
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(user => user.sendEmailVerification()
-        .catch(error => console.log(error)),
-      )
+      .then(user => {
+        this.updateProfile(user);
+        this.sendEmailVerification(user);
+      })
+      .catch(error => this.setState({ error: error.message }));
+  }
+
+  updateProfile = user => {
+    const { displayName } = this.state;
+    user.updateProfile({ displayName })
+      .catch(error => this.setState({ error: error.message }));
+  }
+
+  sendEmailVerification = user => {
+    user.sendEmailVerification()
       .catch(error => this.setState({ error: error.message }));
   }
 
   render() {
-    const { email, password, error } = this.state;
+    const { displayName, email, password, error } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
+        <input type="text" name="displayName" value={displayName} onChange={this.handleChange} />
         <input type="email" name="email" value={email} onChange={this.handleChange} />
         <input type="password" name="password" value={password} onChange={this.handleChange} />
         <button type="submit">Submit</button>
