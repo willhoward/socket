@@ -6,7 +6,6 @@ class Signup extends Component {
     super();
 
     this.state = {
-
       email: '',
       password: '',
       error: '',
@@ -36,6 +35,7 @@ class Signup extends Component {
         <input type="password" name="password" value={password} onChange={this.handleChange} />
         <button type="submit">Submit</button>
         { error && <p>{error}</p> }
+        <p><a href="/login">Login</a> instead</p>
       </form>
     );
   }

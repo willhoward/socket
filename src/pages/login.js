@@ -33,6 +33,7 @@ class Login extends Component {
         <input type="password" name="password" value={password} onChange={this.handleChange} />
         <button type="submit">Submit</button>
         { error && <p>{error}</p> }
+        <p><a href="/signup">Signup</a> instead</p>
       </form>
     );
   }
