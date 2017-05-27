@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import Input from '../components/input';
 
 class Login extends Component {
   constructor() {
@@ -12,9 +13,9 @@ class Login extends Component {
     };
   }
 
-  handleChange = event => {
+  handleChange = (event, name, value) => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [name]: value,
     });
   }
 
@@ -28,8 +29,8 @@ class Login extends Component {
     const { email, password, error } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
-        <input type="email" name="email" value={email} onChange={this.handleChange} />
-        <input type="password" name="password" value={password} onChange={this.handleChange} />
+        <Input type="email" name="email" placeholder="Email address" value={email} onChange={this.handleChange} />
+        <Input type="password" name="password" placeholder="Password" value={password} onChange={this.handleChange} />
         <button type="submit">Submit</button>
         { error && <p>{error}</p> }
         <p><a href="/signup">Signup</a> instead</p>
