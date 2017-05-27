@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
 import App from './app';
-import NotFound from './not-found';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -19,14 +16,7 @@ const config = {
 
 firebase.initializeApp(config);
 
-const history = createBrowserHistory();
-
 ReactDOM.render(
-  <Router history={history}>
-    <Switch>
-      <Route exact path="/" component={App} />
-      <Route component={NotFound} />
-    </Switch>
-  </Router>
+  <App />
   , document.getElementById('root'));
 registerServiceWorker();
