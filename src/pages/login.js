@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import Input from '../components/input';
+import Button from '../components/button';
 
 class Login extends Component {
   constructor() {
@@ -13,7 +14,7 @@ class Login extends Component {
     };
   }
 
-  handleChange = (event, name, value) => {
+  handleChange = (name, value) => {
     this.setState({
       [name]: value,
     });
@@ -28,10 +29,10 @@ class Login extends Component {
   render() {
     const { email, password, error } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className="gateway" onSubmit={this.handleSubmit}>
         <Input type="email" name="email" placeholder="Email address" value={email} onChange={this.handleChange} />
         <Input type="password" name="password" placeholder="Password" value={password} onChange={this.handleChange} />
-        <button type="submit">Submit</button>
+        <Button value="Login" type="submit" />
         { error && <p>{error}</p> }
         <p><a href="/signup">Signup</a> instead</p>
       </form>

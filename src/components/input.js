@@ -24,14 +24,26 @@ class Input extends Component {
     };
   }
 
+  onChange = event => this.props.onChange(event.target.name, event.target.value);
+
   render() {
     const { active } = this.state;
-    const { type, name, placeholder, value, onChange } = this.props;
+    const { type, name, placeholder, value } = this.props;
 
     return (
-      <div className="field">
+      <div className={`field ${(value || active) && 'active'}`}>
+        <input
+          type={type}
+          id={name}
+          name={name}
+          value={value}
+          onChange={this.onChange}
+          onFocus={() => this.setState({ active: true })}
+          onBlur={() => this.setState({ active: false })}
+          placeholder={placeholder}
+          autoComplete="new-password"
+        />
         <label htmlFor={name}>{placeholder}</label>
-        <input stype={type} id={name} name={name} value={value} onChange={onChange} />
       </div>
     );
   }
