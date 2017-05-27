@@ -18,7 +18,6 @@ class App extends Component {
     this.state = {
       user: null,
       loading: true,
-      userName: '',
     };
   }
 
@@ -29,24 +28,18 @@ class App extends Component {
       }
       return this.setState({ user: null, loading: false });
     });
-
-    if (this.state.user) {
-      const dbRefUserName = firebase.database().ref(`users/${this.state.user.uid}/userName`);
-      dbRefUserName.on('value', snap => this.setState({ userName: snap.val() }));
-    }
   }
 
   renderConsole = () => {
-    const { user, userName } = this.state;
+    const { user } = this.state;
     if (user) {
-      return (userName ? <Console /> : <Setup />);
+      return (user.photoUrl ? <Console /> : <Setup />);
     }
     return <Login />;
   }
 
   render() {
     const { user, loading } = this.state;
-    console.log(this.state.userName);
 
     if (loading) {
       return <p>Loading...</p>;
