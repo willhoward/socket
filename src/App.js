@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import Page from './components/page';
 import Window from './components/window';
-import Login from './components/login';
+import Signup from './components/signup';
 
 class App extends Component {
   constructor() {
@@ -17,9 +17,9 @@ class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        return this.setState({ user, loading: false });
+        return this.setState({ user, emailVerified: user.emailVerified, loading: false });
       }
-      return this.setState({ user: null, loading: false });
+      return this.setState({ user: null, emailVerified: false, loading: false });
     });
   }
 
@@ -32,7 +32,7 @@ class App extends Component {
 
     return (
       <Page>
-        { user ? <Window /> : <Login /> }
+        { user ? <Window /> : <Signup /> }
       </Page>
     );
   }

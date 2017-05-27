@@ -22,6 +22,9 @@ class Signup extends Component {
   handleSubmit = event => {
     event.preventDefault();
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(user => user.sendEmailVerification()
+        .catch(error => console.log(error)),
+      )
       .catch(error => this.setState({ error: error.message }));
   }
 
