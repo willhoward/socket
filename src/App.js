@@ -18,29 +18,35 @@ class App extends Component {
     this.state = {
       user: null,
       loading: true,
+      userName: '',
     };
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(user);
         return this.setState({ user, loading: false });
       }
       return this.setState({ user: null, loading: false });
     });
+
+    if (this.state.user) {
+      const dbRefUserName = firebase.database().ref(`users/${this.state.user.uid}/userName`);
+      dbRefUserName.on('value', snap => this.setState({ userName: snap.val() }));
+    }
   }
 
   renderConsole = () => {
-    const { user } = this.state;
+    const { user, userName } = this.state;
     if (user) {
-      return (user.userName ? <Setup /> : <Console />);
+      return (userName ? <Console /> : <Setup />);
     }
     return <Login />;
   }
 
   render() {
     const { user, loading } = this.state;
+    console.log(this.state.userName);
 
     if (loading) {
       return <p>Loading...</p>;

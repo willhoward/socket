@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
 import firebase from 'firebase';
 import Context from '../components/context';
 
-const Console = () => {
-  const user = firebase.auth().currentUser;
+class Console extends Component {
+  constructor() {
+    super();
 
-  return (
-    <div className="window">
-      <Context />
-      { !user.username && <p>No username set</p> }
-      <div className="window--menu" />
-    </div>
-  );
-};
+    this.state = {
+      userName: '',
+    };
+  }
+
+  componentDidMount() {
+    const dbRefProfile = firebase.database().ref().child('userName');
+    dbRefProfile.on('value', snap => this.setState({ userName: snap.val() }));
+  }
+
+  render() {
+    const { userName } = this.state;
+
+    return (
+      <div className="window">
+        <Context />
+        <p className="black">{userName}</p>
+        <div className="window--menu" />
+      </div>
+    );
+  }
+}
 
 export default Console;
