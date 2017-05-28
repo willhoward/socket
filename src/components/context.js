@@ -8,7 +8,7 @@ const Context = () => {
   return (
     <div className="context">
       <div className="context--space">
-        <input type="text" placeholder="Search..." />
+        <input type="search" placeholder="Search by username..." />
       </div>
       <div className="context--item">
         <div className="avatar" onClick={() => signOut()} />
