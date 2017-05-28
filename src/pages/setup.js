@@ -12,6 +12,7 @@ class Setup extends Component {
 
     this.state = {
       userName: '',
+      userNameExisting: '',
       avatar: '',
       loading: false,
       error: '',
@@ -21,8 +22,14 @@ class Setup extends Component {
   handleChange = (name, value) => {
     this.setState({
       [name]: value,
+      userNameExisting: '',
       error: '',
     });
+    const userNameRef = firebase.database().ref('users');
+    return userNameRef
+      .orderByChild('userName')
+      .equalTo(value)
+      .on('child_added', snap => this.setState({ userNameExisting: snap.key }));
   };
 
   handleCompletedUpload = file => {
@@ -62,10 +69,11 @@ class Setup extends Component {
     firebase.database().ref(`users/${user.uid}`).update({
       userName,
     });
+    return this.setState({ userName: '', userNameExisting: '' });
   };
 
   render() {
-    const { userName, avatar, loading, error } = this.state;
+    const { userName, userNameExisting, avatar, loading, error } = this.state;
 
     return (
       <form className="gateway" onSubmit={this.handleSubmit}>
@@ -80,7 +88,8 @@ class Setup extends Component {
           onChange={this.handleChange}
           required
         />
-        <Button value={loading ? 'Loading...' : 'Save Profile'} type="submit" />
+        { userNameExisting && <Callout type="error" value="This username already exists." /> }
+        <Button value={loading ? 'Loading...' : 'Save Profile'} type="submit" disabled={userName.length < 4 || userNameExisting.length > 0 || loading} />
         {error && <Callout type="error" value={error} />}
       </form>
     );
