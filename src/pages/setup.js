@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import firebase from 'firebase';
 import Input from '../components/input';
 import Button from '../components/button';
@@ -7,6 +8,10 @@ import Callout from '../components/callout';
 import Uploader from '../components/uploader';
 
 class Setup extends Component {
+  static propTypes = {
+    returnUserName: PropTypes.func.isRequired,
+  };
+
   constructor() {
     super();
 
@@ -69,7 +74,7 @@ class Setup extends Component {
     firebase.database().ref(`users/${user.uid}`).update({
       userName,
     });
-    return this.setState({ userName: '', userNameExisting: '' });
+    return this.props.returnUserName(userName);
   };
 
   render() {

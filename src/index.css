@@ -278,3 +278,38 @@ button:disabled {
 .callout.error {
   background: #ec392f;
 }
+
+.loader {
+  width: 88px;
+  height: 88px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  padding: 16px;
+}
+
+.spinner {
+  width: 56px;
+  height: 65px;
+  display: block;
+  margin: 0 auto;
+  x: 0px;
+  y: 0px;
+  viewBox: 0 0 56 56;
+}
+
+.spinner {
+  fill: transparent;
+  stroke: white;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 2;
+  transform-origin: 28px 28px 0;
+}
+
+@keyframes spinner {
+  0% {
+      transform: rotate(0deg);
+  } 100% {
+      transform: rotate(360deg);
+  }
+}

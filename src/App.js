@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import Page from './components/page';
+import Loading from './components/loading';
 import NotFound from './pages/not-found';
 import Console from './pages/console';
 import Login from './pages/login';
@@ -17,6 +18,7 @@ class App extends Component {
 
     this.state = {
       user: null,
+      userName: '',
       loading: true,
     };
   }
@@ -24,32 +26,46 @@ class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        return this.setState({ user, loading: false });
+        const dbRefProfile = firebase.database().ref(`users/${user.uid}/userName`);
+        return dbRefProfile.once('value')
+          .then(snap => {
+            if (snap.val()) {
+              return this.setState({ user, userName: snap.val(), loading: false });
+            }
+            return this.setState({ user, userName: '', loading: false });
+          })
+          .catch(error => console.log(error.message));
       }
       return this.setState({ user: null, loading: false });
     });
   }
 
-  renderConsole = () => {
-    const { user } = this.state;
-    if (user) {
-      return (user.photoUrl ? <Console /> : <Setup />);
-    }
-    return <Login />;
-  }
+  returnUserName = userName => this.setState({ userName });
 
   render() {
-    const { user, loading } = this.state;
+    const { user, userName, loading } = this.state;
 
     if (loading) {
-      return <p>Loading...</p>;
+      return (
+        <Page>
+          <Loading />
+        </Page>
+      );
+    }
+
+    if (user && !userName) {
+      return (
+        <Page>
+          <Setup returnUserName={this.returnUserName} />
+        </Page>
+      );
     }
 
     return (
       <Router history={history}>
         <Page>
           <Switch>
-            <Route exact path="/" render={this.renderConsole} />
+            <Route exact path="/" render={() => (user ? <Console /> : <Login />)} />
             <Route exact path="/login" render={() => (user ? <Redirect to="/" /> : <Login />)} />
             <Route exact path="/signup" render={() => (user ? <Redirect to="/" /> : <Signup />)} />
             <Route component={NotFound} />
