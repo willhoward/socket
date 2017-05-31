@@ -1,2 +1,2 @@
 # socket
-Real-time instant messaging app, in React.
+Real-time instant messaging app, with React and Firebase.

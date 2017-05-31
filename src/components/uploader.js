@@ -17,11 +17,11 @@ const Uploader = ({ url, onComplete }) => {
 
 Uploader.propTypes = {
   onComplete: PropTypes.func.isRequired,
-  image: PropTypes.string,
+  url: PropTypes.string,
 };
 
 Uploader.defaultProps = {
-  image: '',
+  url: '',
 };
 
 export default Uploader;
