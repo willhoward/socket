@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import firebase from 'firebase';
 import Avatar from './avatar';
 
 class Context extends Component {
+  static propTypes = {
+    onToggleSearch: PropTypes.func.isRequired,
+  };
+
   constructor() {
     super();
 
@@ -32,13 +37,14 @@ class Context extends Component {
 
   render() {
     const { avatar } = this.state;
+    const { onToggleSearch } = this.props;
     return (
       <div className="context">
         <div className="context--space">
-          <input type="search" placeholder="Search by username..." />
+          <input type="search" placeholder="Search by username..." onFocus={onToggleSearch} onBlur={onToggleSearch} />
         </div>
         <div className="context--item">
-          <Avatar image={avatar} />
+          <Avatar image={avatar} onClick={this.signOut} />
         </div>
       </div>
     );

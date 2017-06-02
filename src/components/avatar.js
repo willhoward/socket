@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 class Avatar extends Component {
   static propTypes = {
     image: PropTypes.string,
+    onClick: PropTypes.func,
   };
 
   static defaultProps = {
     image: '',
+    onClick: () => '',
   };
 
   constructor() {
@@ -19,12 +21,12 @@ class Avatar extends Component {
   }
 
   render() {
-    const { image } = this.props;
+    const { image, onClick } = this.props;
     const { loading } = this.state;
     return (
-      <div className="avatar">
+      <button className="avatar" onClick={onClick}>
         <img className={loading && 'loading'} src={image} alt="Avatar" onLoad={() => this.setState({ loading: false })} />
-      </div>
+      </button>
     );
   }
 }
