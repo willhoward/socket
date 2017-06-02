@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import Avatar from './avatar';
 
 class Context extends Component {
   constructor() {
@@ -14,15 +15,16 @@ class Context extends Component {
 
   componentDidMount() {
     const user = firebase.auth().currentUser;
-    const avatarRef = firebase.database().ref(`users/${user.uid}/avatar`);
-    firebase
-      .storage()
-      .refFromURL(avatarRef)
-      .getMetadata()
-      .then(metadata =>
-        this.setState({ avatar: metadata.downloadURLs[0], loading: false, error: '' }),
-      )
-      .catch(error => this.setState({ loading: false, error: error.message }));
+    firebase.database().ref(`users/${user.uid}/avatar`).once('value').then(snap => {
+      firebase
+        .storage()
+        .refFromURL(snap.val())
+        .getMetadata()
+        .then(metadata =>
+          this.setState({ avatar: metadata.downloadURLs[0], loading: false, error: '' }),
+        )
+        .catch(error => this.setState({ loading: false, error: error.message }));
+    });
   }
 
   signOut = () => firebase.auth().signOut()
@@ -36,7 +38,7 @@ class Context extends Component {
           <input type="search" placeholder="Search by username..." />
         </div>
         <div className="context--item">
-          <img src={avatar} alt="Profile" onClick={this.signOut} />
+          <Avatar image={avatar} />
         </div>
       </div>
     );

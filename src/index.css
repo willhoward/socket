@@ -114,13 +114,6 @@ a {
   padding: 16px;
 }
 
-.avatar {
-  width: 48px;
-  height: 48px;
-  background: gray;
-  border-radius: 50%;
-}
-
 form {
   width: 100%;
 }
@@ -320,6 +313,26 @@ button:disabled {
   stroke-linecap: round;
   stroke-dasharray: 2;
   transform-origin: 28px 28px 0;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  background: #aaaaaa;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 1;
+}
+
+.avatar img {
+  width: 48px;
+  height: 48px;
+  opacity: 1;
+  transition: 300ms opacity;
+}
+
+.avatar img.loading {
+  opacity: 0;
 }
 
 @keyframes spinner {
