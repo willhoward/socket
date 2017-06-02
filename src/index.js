@@ -6,12 +6,12 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
 const config = {
-  apiKey: 'AIzaSyD3mRdsyHcPf0FbhkbJWf0ZkjMPRG9Ttmc',
-  authDomain: 'socket-65ebb.firebaseapp.com',
-  databaseURL: 'https://socket-65ebb.firebaseio.com',
-  projectId: 'socket-65ebb',
-  storageBucket: 'socket-65ebb.appspot.com',
-  messagingSenderId: '473787475654',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
 };
 
 firebase.initializeApp(config);
