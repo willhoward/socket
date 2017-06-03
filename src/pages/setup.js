@@ -73,6 +73,7 @@ class Setup extends Component {
 
     firebase.database().ref(`users/${user.uid}`).update({
       userName,
+      displayName: user.displayName,
     });
     return this.props.returnUserName(userName);
   };

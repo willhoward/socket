@@ -148,6 +148,29 @@ ul.chats li {
   border-top: 2px solid #eeeeee;
 }
 
+.search-results ul {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.search-results ul li {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  border-bottom: 2px solid #eeeeee;
+  cursor: pointer;
+  background: white;
+}
+
+.search-results ul li:hover {
+  background: #f2f2f2;
+}
+
 form {
   width: 100%;
 }
