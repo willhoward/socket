@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "algoliasearch": "^3.22.3",
     "dotenv": "^4.0.0",
     "firebase": "^4.0.0",
     "history": "^4.6.1",

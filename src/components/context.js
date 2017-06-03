@@ -6,6 +6,7 @@ import Avatar from './avatar';
 class Context extends Component {
   static propTypes = {
     onToggleSearch: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -37,11 +38,11 @@ class Context extends Component {
 
   render() {
     const { avatar } = this.state;
-    const { onToggleSearch } = this.props;
+    const { onToggleSearch, onSearch } = this.props;
     return (
       <div className="context">
         <div className="context--space">
-          <input type="search" placeholder="Search by username..." onFocus={onToggleSearch} onBlur={onToggleSearch} />
+          <input type="search" placeholder="Search by username..." onChange={onSearch} onFocus={onToggleSearch} onBlur={onToggleSearch} />
         </div>
         <div className="context--item">
           <Avatar image={avatar} onClick={this.signOut} />
