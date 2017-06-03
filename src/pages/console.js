@@ -25,9 +25,13 @@ class Console extends Component {
       process.env.REACT_APP_ALGOLIA_API_KEY,
     );
     const index = client.initIndex('users');
-    index.search(event.target.value, (err, content) => {
-      this.setState({ results: content.hits });
-    });
+    if (event.target.value.length > 0) {
+      index.search(event.target.value, (err, content) => {
+        this.setState({ results: content.hits });
+      });
+    } else {
+      this.setState({ results: [] });
+    }
   }
 
   render() {
