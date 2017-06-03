@@ -41,7 +41,7 @@ a {
 }
 
 .grey {
-  color: #757575;
+  color: #aaaaaa;
 }
 
 .black {
@@ -156,7 +156,7 @@ ul.chats li {
   list-style-type: none;
 }
 
-.search-results ul li {
+.search-result {
   width: 100%;
   height: 80px;
   display: flex;
@@ -167,8 +167,18 @@ ul.chats li {
   background: white;
 }
 
-.search-results ul li:hover {
+.search-result:hover {
   background: #f2f2f2;
+}
+
+.search-result--item {
+  flex: 0 0 content;
+}
+
+.search-result--space {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 16px;
 }
 
 form {
@@ -403,4 +413,15 @@ button.avatar {
   } 100% {
       transform: rotate(360deg);
   }
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  cursor: pointer;
 }

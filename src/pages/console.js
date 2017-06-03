@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
 import algoliasearch from 'algoliasearch';
 import Context from '../components/context';
 import SearchResults from '../components/search-results';
@@ -34,13 +35,34 @@ class Console extends Component {
     }
   }
 
+  onAddChat = id => {
+    const user = firebase.auth().currentUser;
+    const members = [user.uid, id];
+    firebase.database().ref(`chats/${user.uid}_${id}`).set({
+      members,
+      createdBy: user.uid,
+    });
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const user = firebase.auth().currentUser;
+    const { userName } = this.state;
+
+    firebase.database().ref(`users/${user.uid}`).update({
+      userName,
+      displayName: user.displayName,
+    });
+    return this.props.returnUserName(userName);
+  };
+
   render() {
     const { search, results } = this.state;
     return (
       <div className="window">
         <Context onToggleSearch={this.onToggleSearch} onSearch={this.onSearch} />
         { search ?
-          <SearchResults results={results} />
+          <SearchResults results={results} onAddChat={this.onAddChat} />
           :
           <span>
             <Chats />

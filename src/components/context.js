@@ -42,7 +42,7 @@ class Context extends Component {
     return (
       <div className="context">
         <div className="context--space">
-          <input type="search" placeholder="Search by username..." onChange={onSearch} onFocus={onToggleSearch} onBlur={onToggleSearch} />
+          <input type="search" placeholder="Search by username..." onChange={onSearch} onFocus={onToggleSearch} />
         </div>
         <div className="context--item">
           <Avatar image={avatar} onClick={this.signOut} />
