@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import Avatar from './avatar';
 
 class Chats extends Component {
   constructor() {
@@ -11,7 +12,7 @@ class Chats extends Component {
   }
 
   componentWillMount() {
-    firebase.database().ref('/chats').once('value').then(snap => {
+    firebase.database().ref('chats').on('value', snap => {
       const chats = [];
       Object.keys(snap.val()).forEach(i => {
         const chat = snap.val()[i];
@@ -26,8 +27,13 @@ class Chats extends Component {
     return (
       <ul className="chats">
         { chats.map(chat => (
-          <li key={`${chat.members[0]}_${chat.members[1]}`}>
-            <p className="black">{`${chat.members[0]}_${chat.members[1]}`}</p>
+          <li className="chat" key={`${chat.members[0]}_${chat.members[1]}`}>
+            <div className="chat--item">
+              <Avatar image="/" />
+            </div>
+            <div className="chat--space">
+              <p className="black">{`${chat.members[0]}_${chat.members[1]}`}</p>
+            </div>
           </li>
         ))}
       </ul>

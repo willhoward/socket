@@ -16,9 +16,9 @@ class Console extends Component {
     };
   }
 
-  onToggleSearch = () => {
-    this.setState({ search: !this.state.search });
-  }
+  onSetSearch = () => this.setState({ search: true });
+
+  onRemoveSearch = () => this.setState({ search: false });
 
   onSearch = event => {
     const client = algoliasearch(
@@ -27,13 +27,14 @@ class Console extends Component {
     );
     const index = client.initIndex('users');
     if (event.target.value.length > 0) {
+      this.setState({ search: true });
       index.search(event.target.value, (err, content) => {
         this.setState({ results: content.hits });
       });
     } else {
-      this.setState({ results: [] });
+      this.setState({ search: false, results: [] });
     }
-  }
+  };
 
   onAddChat = id => {
     const user = firebase.auth().currentUser;
@@ -42,7 +43,7 @@ class Console extends Component {
       members,
       createdBy: user.uid,
     });
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -60,15 +61,17 @@ class Console extends Component {
     const { search, results } = this.state;
     return (
       <div className="window">
-        <Context onToggleSearch={this.onToggleSearch} onSearch={this.onSearch} />
-        { search ?
-          <SearchResults results={results} onAddChat={this.onAddChat} />
-          :
-          <span>
+        <Context
+          onSetSearch={this.onSetSearch}
+          onRemoveSearch={this.onRemoveSearch}
+          onSearch={this.onSearch}
+        />
+        {search
+          ? <SearchResults results={results} onAddChat={this.onAddChat} />
+          : <span>
             <Chats />
             <NewChat />
-          </span>
-        }
+          </span>}
       </div>
     );
   }

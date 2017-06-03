@@ -5,7 +5,8 @@ import Avatar from './avatar';
 
 class Context extends Component {
   static propTypes = {
-    onToggleSearch: PropTypes.func.isRequired,
+    onSetSearch: PropTypes.func.isRequired,
+    onRemoveSearch: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired,
   };
 
