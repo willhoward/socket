@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import firebase from 'firebase';
 import algoliasearch from 'algoliasearch';
 import Context from '../components/context';
@@ -7,12 +8,21 @@ import Chats from '../components/chats';
 import NewChat from '../components/new-chat';
 
 class Console extends Component {
+  static propTypes = {
+    returnUserName: PropTypes.func,
+  };
+
+  static defaultProps = {
+    returnUserName: () => '',
+  };
+
   constructor() {
     super();
 
     this.state = {
       search: false,
       results: [],
+      chat: '',
     };
   }
 
@@ -20,7 +30,10 @@ class Console extends Component {
 
   onRemoveSearch = () => this.setState({ search: false });
 
+  onSelectChat = chat => this.setState({ chat });
+
   onSearch = event => {
+    const user = firebase.auth().currentUser;
     const client = algoliasearch(
       process.env.REACT_APP_ALGOLIA_APPLICATION_ID,
       process.env.REACT_APP_ALGOLIA_API_KEY,
@@ -28,8 +41,11 @@ class Console extends Component {
     const index = client.initIndex('users');
     if (event.target.value.length > 0) {
       this.setState({ search: true });
-      index.search(event.target.value, (err, content) => {
-        this.setState({ results: content.hits });
+      index.search({
+        query: event.target.value,
+        filters: `NOT objectID:${user.uid}`,
+      }).then(res => {
+        this.setState({ results: res.hits });
       });
     } else {
       this.setState({ search: false, results: [] });
@@ -69,7 +85,7 @@ class Console extends Component {
         {search
           ? <SearchResults results={results} onAddChat={this.onAddChat} />
           : <span>
-            <Chats />
+            <Chats onSelectChat={this.onSelectChat} />
             <NewChat />
           </span>}
       </div>
