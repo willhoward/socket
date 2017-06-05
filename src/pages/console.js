@@ -43,7 +43,7 @@ class Console extends Component {
       this.setState({ search: true });
       index.search({
         query: event.target.value,
-        filters: `NOT objectID:${user.uid}`,
+        filters: `NOT  objectID:${user.uid}`,
       }).then(res => {
         this.setState({ results: res.hits });
       });
