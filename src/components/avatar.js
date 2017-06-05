@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import firebase from 'firebase';
 
 class Avatar extends Component {
   static propTypes = {
-    image: PropTypes.string,
+    userID: PropTypes.string,
     onClick: PropTypes.func,
   };
 
   static defaultProps = {
-    image: '',
+    userID: '',
     onClick: () => '',
   };
 
@@ -16,13 +17,28 @@ class Avatar extends Component {
     super();
 
     this.state = {
+      image: '',
       loading: true,
+      error: '',
     };
   }
 
+  componentDidMount() {
+    firebase.database().ref(`users/${this.props.userID}/avatar`).once('value').then(snap => {
+      firebase
+        .storage()
+        .refFromURL(snap.val())
+        .getMetadata()
+        .then(metadata =>
+          this.setState({ image: metadata.downloadURLs[0], loading: false, error: '' }),
+        )
+        .catch(error => this.setState({ loading: false, error: error.message }));
+    });
+  }
+
   render() {
-    const { image, onClick } = this.props;
-    const { loading } = this.state;
+    const { onClick } = this.props;
+    const { image, loading } = this.state;
     return (
       <button className="avatar" onClick={onClick}>
         <img className={loading && 'loading'} src={image} alt="Avatar" onLoad={() => this.setState({ loading: false })} />

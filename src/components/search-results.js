@@ -9,7 +9,7 @@ const SearchResults = ({ results, onAddChat }) => (
       { results.map(result => (
         <li className="search-result" key={result.objectID} onClick={() => onAddChat(result.objectID)}>
           <div className="search-result--item">
-            <Avatar image="/" />
+            <Avatar userID={result.id} />
           </div>
           <div className="search-result--space">
             <p className="green"><b>{result.displayName}</b></p>

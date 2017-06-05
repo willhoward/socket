@@ -20,33 +20,19 @@ class Context extends Component {
     };
   }
 
-  componentDidMount() {
-    const user = firebase.auth().currentUser;
-    firebase.database().ref(`users/${user.uid}/avatar`).once('value').then(snap => {
-      firebase
-        .storage()
-        .refFromURL(snap.val())
-        .getMetadata()
-        .then(metadata =>
-          this.setState({ avatar: metadata.downloadURLs[0], loading: false, error: '' }),
-        )
-        .catch(error => this.setState({ loading: false, error: error.message }));
-    });
-  }
-
   signOut = () => firebase.auth().signOut()
     .catch(error => console.log(error));
 
   render() {
-    const { avatar } = this.state;
     const { onToggleSearch, onSearch } = this.props;
+    const user = firebase.auth().currentUser;
     return (
       <div className="context">
         <div className="context--space">
           <input type="search" placeholder="Search by username..." onChange={onSearch} onFocus={onToggleSearch} />
         </div>
         <div className="context--item">
-          <Avatar image={avatar} onClick={this.signOut} />
+          <Avatar userID={user.uid} onClick={this.signOut} />
         </div>
       </div>
     );
