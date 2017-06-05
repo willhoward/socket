@@ -72,6 +72,7 @@ class Setup extends Component {
     const { userName } = this.state;
 
     firebase.database().ref(`users/${user.uid}`).update({
+      id: user.uid,
       userName,
       displayName: user.displayName,
     });

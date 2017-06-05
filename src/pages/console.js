@@ -22,7 +22,7 @@ class Console extends Component {
     this.state = {
       search: false,
       results: [],
-      chat: '',
+      chat: '1234',
     };
   }
 
