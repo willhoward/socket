@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import Avatar from './avatar';
 
 class Chats extends Component {
@@ -11,15 +10,8 @@ class Chats extends Component {
     };
   }
 
-  componentWillMount() {
-    firebase.database().ref('chats').on('value', snap => {
-      const chats = [];
-      Object.keys(snap.val()).forEach(i => {
-        const chat = snap.val()[i];
-        chats.push(chat);
-      });
-      this.setState({ chats });
-    });
+  componentWillMount = () => {
+    const chatsRef = firebase.database().ref('chats');
   }
 
   render() {
