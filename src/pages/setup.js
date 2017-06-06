@@ -40,7 +40,7 @@ class Setup extends Component {
   handleCompletedUpload = file => {
     const user = firebase.auth().currentUser;
     const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(`${user.uid}/avatars/${file.name.replace(/ /g, '_')}`);
+    const fileRef = storageRef.child(`/avatars/${user.uid}`);
     if (file.type === 'image/jpeg' || file.type === 'image/png') {
       this.setState({ loading: true, error: '' });
       fileRef
@@ -94,6 +94,7 @@ class Setup extends Component {
           value={userName}
           onChange={this.handleChange}
           required
+          accept=".png, .jpg, .jpeg"
         />
         { userNameExisting && <Callout type="error" value="This username already exists." /> }
         <Button value={loading ? 'Loading...' : 'Save Profile'} type="submit" disabled={userName.length < 4 || userNameExisting.length > 0 || loading} />

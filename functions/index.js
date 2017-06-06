@@ -19,7 +19,7 @@ exports.searchAddUser = functions.database.ref('/users/{userId}').onWrite(event 
   });
 });
 
-exports.generateThumbnail = functions.storage.bucket('avatars').object().onChange(event => {
+exports.generateThumbnail = functions.storage.object().onChange(event => {
   const object = event.data;
 
   const fileBucket = object.bucket;
@@ -32,6 +32,8 @@ exports.generateThumbnail = functions.storage.bucket('avatars').object().onChang
     console.log('This is not an image.');
     return;
   }
+
+  console.log('File path: ', filePath);
 
   const fileName = filePath.split('/').pop();
   if (fileName.startsWith('thumb_')) {
@@ -55,7 +57,7 @@ exports.generateThumbnail = functions.storage.bucket('avatars').object().onChang
     destination: tempFilePath,
   }).then(() => {
     console.log('Image downloaded locally to', tempFilePath);
-    return spawn('convert', [tempFilePath, '-thumbnail', '96x96>', tempFilePath]).then(() => {
+    return spawn('convert', [tempFilePath, '-define', 'jpeg:size=96x96', '-thumbnail', '96x96^', '-gravity', 'center', '-extent', '96x96', tempFilePath]).then(() => {
       console.log('Thumbnail created at', tempFilePath);
       const thumbFilePath = filePath.replace(/(\/)?([^\/]*)$/, '$1thumb_$2');
       return bucket.upload(tempFilePath, {
