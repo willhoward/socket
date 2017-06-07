@@ -2,7 +2,7 @@
 Real-time instant messaging app, with [React](https://facebook.github.io/react/) and [Firebase](https://firebase.google.com/). Live instance: https://socket.willhowardgb.com.
 
 ### Running Locally
-Built and run this project yourself with the following steps:
+Build and run this project yourself with the following steps:
 
 * Run `git clone https://github.com/willhowardgb/socket.git`.
 * Navigate into the project folder and run `yarn` to install the necessary packages.
@@ -30,4 +30,4 @@ Deploy this project in under two minutes with the following steps:
 ### How It Works
 This project was created with [create-react-app](https://github.com/facebookincubator/create-react-app), a tool which allows the rapid creation of React apps with no build configuration or fuss. It is intended to be the most minimal, lightweight chat app possible, without compromising on user experience. In order to achieve this, the CSS styling has been customised to include only those elements used in the project and does not rely on an underlying framework. It is therefore likely that, should you attempt to add new components, the styling will not apply.
 
-The app relies on a constant connection to the Firebase Database, which keeps all conversations up to date in real-time. Since Firebase includes support for loss of connection, the app will store messages when the connection to the database is lost, warn the user, then re-sync the data when the connection is re-established.
+Various heavy-lifting tasks are carried out behind the scenes by Firebase Functions. Amongst other things, these functions are responsible for watching changes made to the Firebase Database and updating the appropriate Algolia index. Since this involves a connection to a third party, you'll need to upgrade your Firebase project to a paid plan. Without this, the functions will fail to connect to external services.

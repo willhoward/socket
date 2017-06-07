@@ -59,9 +59,8 @@ exports.generateThumbnail = functions.storage.object().onChange(event => {
     console.log('Image downloaded locally to', tempFilePath);
     return spawn('convert', [tempFilePath, '-define', 'jpeg:size=96x96', '-thumbnail', '96x96^', '-gravity', 'center', '-extent', '96x96', tempFilePath]).then(() => {
       console.log('Thumbnail created at', tempFilePath);
-      const thumbFilePath = filePath.replace(/(\/)?([^\/]*)$/, '$1thumb_$2');
       return bucket.upload(tempFilePath, {
-        destination: thumbFilePath,
+        destination: filePath,
       });
     });
   });
