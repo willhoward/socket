@@ -24,7 +24,7 @@ class Avatar extends Component {
   }
 
   componentDidMount() {
-    firebase.database().ref(`users/${this.props.userID}/avatar`).once('value').then(snap => {
+    firebase.database().ref(`avatars/${this.props.userID}`).once('value').then(snap => {
       firebase
         .storage()
         .refFromURL(snap.val())

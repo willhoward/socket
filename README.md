@@ -6,8 +6,15 @@ Built and run this project yourself with the following steps:
 
 * Run `git clone https://github.com/willhowardgb/socket.git`.
 * Navigate into the project folder and run `yarn` to install the necessary packages.
-* Create a new Firebase project and copy your project config credentials.
-* Paste your Firebase config credentials to the space indicated in `index.js`.
+* Create a new Firebase project and create two files at the root of your project folder, `env.dev` and `env.prod`. Insert the following environment variables into both of these files from your Firebase and Algolia config credentials:
+```REACT_APP_FIREBASE_API_KEY`,
+REACT_APP_FIREBASE_AUTH_DOMAIN,
+REACT_APP_FIREBASE_DATABASE_URL,
+REACT_APP_FIREBASE_PROJECT_ID,
+REACT_APP_FIREBASE_STORAGE_BUCKET,
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+REACT_APP_ALGOLIA_APPLICATION_ID,
+REACT_APP_ALGOLIA_API_KEY```
 * Make sure you have the email and password authentication method enabled in your Firebase project.
 * Run `yarn start` to launch the project locally in your browser.
 
