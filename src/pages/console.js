@@ -55,15 +55,22 @@ class Console extends Component {
   onAddChat = id => {
     const user = firebase.auth().currentUser;
     const members = [];
-    firebase.database().ref(`users/${id}`).once('value').then(snap => members.push(snap.val()));
-    firebase.database().ref(`users/${user.uid}`).once('value').then(snap => members.push(snap.val()));
-    if (user.uid !== id) {
-      firebase.database().ref(`chats/${user.uid}_${id}`).set({
-        members,
-        createdBy: user.uid,
+    firebase.database().ref(`users/${id}`).once('value').then(snap => {
+      const userMember = snap.val();
+      userMember.acceptedChat = false;
+      members.push(userMember);
+      firebase.database().ref(`users/${user.uid}`).once('value').then(snap2 => {
+        const currentUserMember = snap2.val();
+        currentUserMember.acceptedChat = true;
+        members.push(currentUserMember);
+        if (user.uid !== id) {
+          const chatsRef = firebase.database().ref('chats');
+          const newChatRef = chatsRef.push();
+          console.log('New chat ID is: ', newChatRef.key);
+          newChatRef.set({ createdBy: user.uid, members });
+        }
       });
-      this.setState({ search: false });
-    }
+    });
   };
 
   handleSubmit = event => {

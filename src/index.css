@@ -385,12 +385,11 @@ button.avatar {
   width: 48px;
   height: 48px;
   object-fit: cover;
-  opacity: 1;
-  transition: 300ms opacity;
+  opacity: 0;
 }
 
-.avatar img.loading {
-  opacity: 0;
+.avatar.loaded img {
+  opacity: 1;
 }
 
 .callout {

@@ -40,8 +40,8 @@ class Avatar extends Component {
     const { onClick } = this.props;
     const { image, loading } = this.state;
     return (
-      <button className="avatar" onClick={onClick}>
-        <img className={loading && 'loading'} src={image} alt="Avatar" onLoad={() => this.setState({ loading: false })} />
+      <button className={`avatar ${!loading && 'loaded'}`} onClick={onClick}>
+        <img src={image} alt="Avatar" onLoad={() => this.setState({ loading: false })} />
       </button>
     );
   }
