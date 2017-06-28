@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import firebase from 'firebase';
 import Avatar from './avatar';
+import Icon from './icon';
 
 class Chats extends Component {
   static propTypes = {
@@ -22,13 +23,12 @@ class Chats extends Component {
       const chats = [];
       snap.forEach(s => {
         const data = s.val();
+        const currentUser = firebase.auth().currentUser;
+        const member = (data.members[0].id === currentUser.uid) ? data.members[1] : data.members[0];
         const chat = {
           key: s.key,
           createdBy: data.createdBy,
-          members: {
-            0: data.members[0],
-            1: data.members[1],
-          },
+          member,
         };
         chats.push(chat);
       });
@@ -43,7 +43,15 @@ class Chats extends Component {
       <ul className="chats">
         { chats.map(chat => (
           <li className="chat" key={chat.key}>
-            <p className="black">{chat.createdBy}</p>
+            <div className="chat--item">
+              <Avatar userID={chat.member.id} />
+            </div>
+            <div className="chat--space">
+              <p className="black">{chat.member.displayName}</p>
+            </div>
+            <div className="chat--item">
+              <Icon icon="more" transparent />
+            </div>
           </li>
         ))}
       </ul>
