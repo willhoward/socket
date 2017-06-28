@@ -18,9 +18,21 @@ class Chats extends Component {
 
   componentWillMount() {
     const chatsRef = firebase.database().ref('chats');
-    chatsRef.on('value', snap => {
-      const { chats } = this.state;
-      snap.forEach(s => chats.push(s.val()));
+    chatsRef.once('value', snap => {
+      const chats = [];
+      snap.forEach(s => {
+        const data = s.val();
+        const chat = {
+          key: s.key,
+          createdBy: data.createdBy,
+          members: {
+            0: data.members[0],
+            1: data.members[1],
+          },
+        };
+        chats.push(chat);
+      });
+      this.setState({ chats });
     });
   }
 
@@ -29,7 +41,11 @@ class Chats extends Component {
     const { onSelectChat } = this.props;
     return (
       <ul className="chats">
-        <li className="chat" />
+        { chats.map(chat => (
+          <li className="chat" key={chat.key}>
+            <p className="black">{chat.createdBy}</p>
+          </li>
+        ))}
       </ul>
     );
   }
