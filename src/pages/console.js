@@ -5,7 +5,7 @@ import algoliasearch from 'algoliasearch';
 import Context from '../components/context';
 import SearchResults from '../components/search-results';
 import Chats from '../components/chats';
-import NewChat from '../components/new-chat';
+import Chat from '../components/chat';
 
 class Console extends Component {
   static propTypes = {
@@ -66,7 +66,6 @@ class Console extends Component {
         if (user.uid !== id) {
           const chatsRef = firebase.database().ref('chats');
           const newChatRef = chatsRef.push();
-          console.log('New chat ID is: ', newChatRef.key);
           newChatRef.set({ createdBy: user.uid, members });
         }
       });
@@ -94,12 +93,12 @@ class Console extends Component {
           onRemoveSearch={this.onRemoveSearch}
           onSearch={this.onSearch}
         />
-        {search
+        { search
           ? <SearchResults results={results} onAddChat={this.onAddChat} />
           : <span>
             <Chats onSelectChat={this.onSelectChat} />
-            <NewChat />
-          </span>}
+            <Chat id={chat} />
+          </span> }
       </div>
     );
   }

@@ -97,6 +97,19 @@ a {
   border-top: 2px solid #eeeeee;
 }
 
+.stream {
+  width: 100%;
+  height: calc(100% - 82px);
+  background: white;
+}
+
+.composer {
+  width: 100%;
+  height: 80px;
+  border-top: 2px solid #eeeeee;
+  background: #f7f9fa;
+}
+
 ul.chats {
   width: 320px;
   height: calc(100% - 80px);
@@ -162,6 +175,24 @@ ul.chats {
 }
 
 .context--space {
+  flex: 1 1 auto;
+  padding: 16px;
+}
+
+.flex {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0 16px;
+}
+
+.flex--item {
+  flex: 0 0 content;
+  padding: 16px;
+}
+
+.flex--space {
   flex: 1 1 auto;
   padding: 16px;
 }
@@ -328,7 +359,7 @@ input[type="search"] {
   height: 48px;
   padding: 0px 20px 0px 24px;
   border: none;
-  border-radius: 28px;
+  border-radius: 4px;
   font-family: 'Gotham SSm A', 'Gotham SSm B', sans-serif;
   font-size: 16px;
   font-weight: 400;
