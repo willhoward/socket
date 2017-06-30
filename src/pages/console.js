@@ -86,7 +86,7 @@ class Console extends Component {
   };
 
   render() {
-    const { search, results } = this.state;
+    const { search, results, chat } = this.state;
     return (
       <div className="window">
         <Context

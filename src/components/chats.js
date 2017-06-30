@@ -42,17 +42,19 @@ class Chats extends Component {
     return (
       <ul className="chats">
         { chats.map(chat => (
-          <li className="chat" key={chat.key}>
-            <div className="chat--item">
-              <Avatar userID={chat.member.id} />
-            </div>
-            <div className="chat--space">
-              <p className="black">{chat.member.displayName}</p>
-            </div>
-            <div className="chat--item">
-              <Icon icon="more" transparent />
-            </div>
-          </li>
+          <a onClick={() => onSelectChat(chat.key)} role="button" tabIndex="0">
+            <li className="chat" key={chat.key}>
+              <div className="chat--item">
+                <Avatar userID={chat.member.id} />
+              </div>
+              <div className="chat--space">
+                <p className="black">{chat.member.displayName}</p>
+              </div>
+              <div className="chat--item">
+                <Icon icon="more" transparent />
+              </div>
+            </li>
+          </a>
         ))}
       </ul>
     );
