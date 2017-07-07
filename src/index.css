@@ -90,34 +90,36 @@ a {
 
 .window--main {
   width: calc(100% - 320px);
-  height: calc(100% - 80px);
+  height: calc(100% - 81px);
   display: inline-block;
   border-radius: 0 0 4px 0;
   background: white;
-  border-top: 2px solid #eeeeee;
 }
 
 .stream {
   width: 100%;
   height: calc(100% - 82px);
   background: white;
+  background-image: url('/seigaiha.png');
+  background-size: 400px 400px;
+  background-position: top left;
+  background-repeat: repeat;
 }
 
 .composer {
   width: 100%;
-  height: 80px;
-  border-top: 2px solid #eeeeee;
-  background: #f7f9fa;
+  height: 81px;
+  border-top: 1px solid #dddddd;
+  background: #f2f2f2;
 }
 
 ul.chats {
   width: 320px;
-  height: calc(100% - 80px);
+  height: calc(100% - 81px);
   background: white;
   display: inline-block;
   border-radius: 0 0 0 4px;
-  border-top: 2px solid #eeeeee;
-  border-right: 2px solid #eeeeee;
+  border-right: 1px solid #dddddd;
   overflow-x: hidden;
   overflow-y: auto;
   list-style-type: none;
@@ -128,18 +130,26 @@ ul.chats {
 .chat {
   width: 100%;
   height: 80px;
-  border-bottom: 2px solid #eeeeee;
+  border-bottom: 1px solid #dddddd;
   display: flex;
   align-items: center;
-  padding: 0 16px 0 32px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   background: white;
   cursor: pointer;
 }
 
+.chat.active {
+  background: #f2f2f2;
+}
+
 .chat:hover {
-  background: #f7f9fa;
+  background: #fafafa;
+}
+
+.chat.active:hover {
+  background: #f2f2f2;
 }
 
 .chat--item {
@@ -161,22 +171,10 @@ ul.chats {
 
 .context {
   width: 100%;
-  height: 80px;
+  height: 81px;
   background: #f2f2f2;
   border-radius: 4px 4px 0 0;
-  display: flex;
-  flex-wrap: nowrap;
-  padding: 0 16px;
-}
-
-.context--item {
-  flex: 0 0 content;
-  padding: 16px;
-}
-
-.context--space {
-  flex: 1 1 auto;
-  padding: 16px;
+  border-bottom: 1px solid #dddddd;
 }
 
 .flex {
@@ -184,17 +182,24 @@ ul.chats {
   height: auto;
   display: flex;
   flex-wrap: nowrap;
-  padding: 0 16px;
 }
 
 .flex--item {
   flex: 0 0 content;
-  padding: 16px;
+  padding: 16px 8px;
 }
 
 .flex--space {
   flex: 1 1 auto;
-  padding: 16px;
+  padding: 16px 8px;
+}
+
+.flex div:first-child {
+  padding-left: 16px;
+}
+
+.flex div:last-child {
+  padding-right: 16px;
 }
 
 .search-results {
@@ -202,7 +207,6 @@ ul.chats {
   height: calc(100% - 80px);
   background: white;
   border-radius: 0 0 4px 4px;
-  border-top: 2px solid #eeeeee;
 }
 
 .search-results ul {
@@ -219,7 +223,7 @@ ul.chats {
   display: flex;
   align-items: center;
   padding: 0 32px;
-  border-bottom: 2px solid #eeeeee;
+  border-bottom: 1px solid #dddddd;
   cursor: pointer;
   background: white;
 }
@@ -483,4 +487,8 @@ svg.spinner circle {
   justify-content: center;
   background: white;
   cursor: pointer;
+}
+
+.icon.basic {
+  background: none;
 }

@@ -6,8 +6,13 @@ import Icon from './icon';
 
 class Chats extends Component {
   static propTypes = {
+    active: PropTypes.string,
     onSelectChat: PropTypes.func.isRequired,
-  }
+  };
+
+  static defaultProps = {
+    active: null,
+  };
 
   constructor() {
     super();
@@ -37,13 +42,13 @@ class Chats extends Component {
   }
 
   render() {
+    const { active, onSelectChat } = this.props;
     const { chats } = this.state;
-    const { onSelectChat } = this.props;
     return (
       <ul className="chats">
         { chats.map(chat => (
           <a key={chat.key} onClick={() => onSelectChat(chat.key)} role="button" tabIndex="0">
-            <li className="chat">
+            <li className={`chat ${active === chat.key && 'active'}`}>
               <div className="chat--item">
                 <Avatar userID={chat.member.id} />
               </div>

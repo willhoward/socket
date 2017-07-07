@@ -5,8 +5,6 @@ import Avatar from './avatar';
 
 class Context extends Component {
   static propTypes = {
-    onSetSearch: PropTypes.func.isRequired,
-    onRemoveSearch: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired,
   };
 
@@ -24,15 +22,15 @@ class Context extends Component {
     .catch(error => console.log(error));
 
   render() {
-    const { onToggleSearch, onSearch } = this.props;
+    const { onSearch } = this.props;
     const user = firebase.auth().currentUser;
     return (
-      <div className="context">
-        <div className="context--space">
-          <input type="search" placeholder="Search by username..." onChange={onSearch} onFocus={onToggleSearch} />
-        </div>
-        <div className="context--item">
+      <div className="context flex">
+        <div className="flex--item">
           <Avatar userID={user.uid} onClick={this.signOut} />
+        </div>
+        <div className="flex--space">
+          <input type="search" placeholder="Search by username..." onChange={onSearch} />
         </div>
       </div>
     );

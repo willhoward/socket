@@ -6,6 +6,7 @@ import Context from '../components/context';
 import SearchResults from '../components/search-results';
 import Chats from '../components/chats';
 import Chat from '../components/chat';
+import SafetyCurtain from '../components/safety-curtain';
 
 class Console extends Component {
   static propTypes = {
@@ -22,7 +23,7 @@ class Console extends Component {
     this.state = {
       search: false,
       results: [],
-      chat: '1234',
+      active: '',
     };
   }
 
@@ -30,7 +31,7 @@ class Console extends Component {
 
   onRemoveSearch = () => this.setState({ search: false });
 
-  onSelectChat = chat => this.setState({ chat });
+  onSelectChat = key => this.setState({ active: key });
 
   onSearch = event => {
     const user = firebase.auth().currentUser;
@@ -41,36 +42,39 @@ class Console extends Component {
     const index = client.initIndex('users');
     if (event.target.value.length > 0) {
       this.setState({ search: true });
-      index.search({
-        query: event.target.value,
-        filters: `NOT  objectID:${user.uid}`,
-      }).then(res => {
-        this.setState({ results: res.hits });
-      });
+      index
+        .search({
+          query: event.target.value,
+          filters: `NOT  objectID:${user.uid}`,
+        })
+        .then(res => {
+          this.setState({ results: res.hits });
+        });
     } else {
       this.setState({ search: false, results: [] });
     }
   };
 
-  onAddChat = id => {
-    const user = firebase.auth().currentUser;
-    const members = [];
-    firebase.database().ref(`users/${id}`).once('value').then(snap => {
-      const userMember = snap.val();
-      userMember.acceptedChat = false;
-      members.push(userMember);
-      firebase.database().ref(`users/${user.uid}`).once('value').then(snap2 => {
-        const currentUserMember = snap2.val();
-        currentUserMember.acceptedChat = true;
-        members.push(currentUserMember);
-        if (user.uid !== id) {
-          const chatsRef = firebase.database().ref('chats');
-          const newChatRef = chatsRef.push();
-          newChatRef.set({ createdBy: user.uid, members });
+  onSelectSearchResult = user => {
+    firebase.database().ref(`users/${firebase.auth().currentUser.uid}`).once('value').then(userSnap => {
+      const currentUser = userSnap.val();
+      const targetUser = user;
+      const chatId = currentUser.id.charAt[0] < targetUser.id.charAt[0] ? `${currentUser.id}_${targetUser.id}` : `${targetUser.id}_${currentUser.id}`;
+      const chatRef = firebase.database().ref(`chats/${chatId}`);
+      chatRef.child('createdBy').once('value', chatSnap => {
+        if (chatSnap.val()) {
+          this.setState({ search: false, active: chatId });
+        } else {
+          const members = [];
+          currentUser.acceptedChat = true;
+          targetUser.acceptedChat = false;
+          members.push(currentUser, targetUser);
+          chatRef.set({ createdBy: currentUser.id, members });
+          this.setState({ search: false, active: chatId });
         }
       });
     });
-  };
+  }
 
   handleSubmit = event => {
     event.preventDefault();
@@ -85,19 +89,19 @@ class Console extends Component {
   };
 
   render() {
-    const { search, results, chat } = this.state;
+    const { search, results, active } = this.state;
     return (
       <div className="window">
-        <Context
-          onSetSearch={this.onSetSearch}
-          onRemoveSearch={this.onRemoveSearch}
-          onSearch={this.onSearch}
-        />
+        <Context onSearch={this.onSearch} />
         { search
-          ? <SearchResults results={results} onAddChat={this.onAddChat} />
+          ? <SearchResults results={results} onSelectSearchResult={this.onSelectSearchResult} />
           : <span>
             <Chats onSelectChat={this.onSelectChat} />
-            <Chat id={chat} />
+            { active ?
+              <Chat active={active} />
+              :
+              <SafetyCurtain />
+            }
           </span> }
       </div>
     );

@@ -3,11 +3,21 @@ import PropTypes from 'prop-types';
 import Avatar from './avatar';
 import Icon from './icon';
 
-const SearchResults = ({ results, onAddChat }) => (
+const SearchResults = ({ results, onSelectSearchResult }) => (
   <div className="search-results">
     <ul>
-      { results.map(result => (
-        <li className="search-result" key={result.objectID} onClick={() => onAddChat(result.id)}>
+      {results.map(result => (
+        <li
+          className="search-result"
+          key={result.objectID}
+          onClick={() =>
+            onSelectSearchResult({
+              avatar: result.avatar,
+              displayName: result.displayName,
+              id: result.id,
+              userName: result.userName,
+            })}
+        >
           <div className="search-result--item">
             <Avatar userID={result.id} />
           </div>
@@ -26,7 +36,7 @@ const SearchResults = ({ results, onAddChat }) => (
 
 SearchResults.propTypes = {
   results: PropTypes.array,
-  onAddChat: PropTypes.func.isRequired,
+  onSelectSearchResult: PropTypes.func.isRequired,
 };
 
 SearchResults.defaultProps = {
