@@ -44,6 +44,7 @@ class Chats extends Component {
   render() {
     const { active, onSelectChat } = this.props;
     const { chats } = this.state;
+    console.log('Active chat: ', active);
     return (
       <ul className="chats">
         { chats.map(chat => (

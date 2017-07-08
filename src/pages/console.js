@@ -96,7 +96,7 @@ class Console extends Component {
         { search
           ? <SearchResults results={results} onSelectSearchResult={this.onSelectSearchResult} />
           : <span>
-            <Chats onSelectChat={this.onSelectChat} />
+            <Chats onSelectChat={this.onSelectChat} active={active} />
             { active ?
               <Chat active={active} />
               :
