@@ -76,18 +76,22 @@ class Chat extends Component {
       <div className="window--main">
         <div className="stream">
           { messages.map(message => (
-            <div className="message" key={message.id}>
-              <p className="black">{message.content}</p>
+            <div className={message.sentBy === firebase.auth().currentUser.uid ? 'message right' : 'message left'} key={message.id}>
+              <div className="message--content">
+                <p className="black">{message.content}</p>
+              </div>
             </div>
           ))}
         </div>
         <form onSubmit={this.sendMessage}>
           <div className="composer flex">
             <div className="flex--space">
-              <input type="search" placeholder="Type a message" value={newMessage} onChange={this.handleChange} />
+              <input className="composer--field" type="text" placeholder="Type a message" value={newMessage} onChange={this.handleChange} />
             </div>
             <div className="flex--item">
-              <Button icon basic value="send" type="submit" />
+              <a type="submit">
+                <Icon icon="send" basic onClick={this.sendMessage} />
+              </a>
             </div>
           </div>
         </form>

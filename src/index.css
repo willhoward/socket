@@ -99,11 +99,14 @@ a {
 .stream {
   width: 100%;
   height: calc(100% - 82px);
+  padding: 16px;
   background: white;
   background-image: url('/seigaiha.png');
   background-size: 400px 400px;
   background-position: top left;
   background-repeat: repeat;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .composer {
@@ -378,6 +381,26 @@ input[type="search"]::placeholder {
   color: #757575;
 }
 
+input[type="text"].composer--field {
+  width: 100%;
+  height: 48px;
+  padding: 0px 20px 0px 24px;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Gotham SSm A', 'Gotham SSm B', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  background: white;
+  color: #282828;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="text"].composer--field::placeholder {
+  color: #757575;
+}
+
 button {
   width: 100%;
   height: 56px;
@@ -491,4 +514,36 @@ svg.spinner circle {
 
 .icon.basic {
   background: none;
+}
+
+.message {
+  width: 100%;
+  height: auto;
+  margin: 0 0 4px 0;
+  display: flex;
+}
+
+.message.left {
+  justify-content: flex-start;
+}
+
+.message.right {
+  justify-content: flex-end;
+}
+
+.message--content {
+  width: auto;
+  height: auto;
+  max-width: 70%;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+}
+
+.message.left .message--content {
+  background: white;
+}
+
+.message.right .message--content {
+  background: #dcf8c6
 }
