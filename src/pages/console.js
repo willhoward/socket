@@ -24,6 +24,7 @@ class Console extends Component {
       search: false,
       results: [],
       active: '',
+      targetUser: '',
     };
   }
 
@@ -31,7 +32,7 @@ class Console extends Component {
 
   onRemoveSearch = () => this.setState({ search: false });
 
-  onSelectChat = key => this.setState({ active: key });
+  onSelectChat = (key, targetUser) => this.setState({ active: key, targetUser });
 
   onSearch = event => {
     const user = firebase.auth().currentUser;
@@ -89,7 +90,7 @@ class Console extends Component {
   };
 
   render() {
-    const { search, results, active } = this.state;
+    const { search, results, active, targetUser } = this.state;
     return (
       <div className="window">
         <Context onSearch={this.onSearch} />
@@ -98,7 +99,7 @@ class Console extends Component {
           : <span>
             <Chats onSelectChat={this.onSelectChat} active={active} />
             { active ?
-              <Chat active={active} />
+              <Chat active={active} targetUser={targetUser} />
               :
               <SafetyCurtain />
             }

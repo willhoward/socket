@@ -44,11 +44,10 @@ class Chats extends Component {
   render() {
     const { active, onSelectChat } = this.props;
     const { chats } = this.state;
-    console.log('Active chat: ', active);
     return (
       <ul className="chats">
         { chats.map(chat => (
-          <a key={chat.key} onClick={() => onSelectChat(chat.key)} role="button" tabIndex="0">
+          <a key={chat.key} onClick={() => onSelectChat(chat.key, chat.member.id)} role="button" tabIndex="0">
             <li className={`chat ${active === chat.key && 'active'}`}>
               <div className="chat--item">
                 <Avatar userID={chat.member.id} />
