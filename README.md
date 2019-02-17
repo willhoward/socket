@@ -1,5 +1,5 @@
 # socket
-Real-time instant messaging app, with [React](https://facebook.github.io/react/) and [Firebase](https://firebase.google.com/). Live instance: https://socket.willhowardgb.com.
+Real-time instant messaging app, with [React](https://facebook.github.io/react/) and [Firebase](https://firebase.google.com/).
 
 ### Running Locally
 Build and run this project yourself with the following steps:
